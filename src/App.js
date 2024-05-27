@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+import AlbumList from './components/AlbumList';
 import './App.css';
 
 function App() {
+
+  const [albums, setAlbums] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    fetch('https://itunes.apple.com/us/rss/topalbums/limit=100/json')
+      .then(response => response.json())
+      .then(data => setAlbums(data.feed.entry))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []); 
+
+  const filteredAlbums = albums.filter(album => {
+    const title = album['im:name'].label.toLowerCase();
+    const artist = album['im:artist'].label.toLowerCase();
+    const query = searchQuery.toLowerCase();
+    return title.includes(query) || artist.includes(query);
+  });
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {}
+      <AlbumList albums={filteredAlbums} setSearchQuery={setSearchQuery} />
     </div>
   );
 }
