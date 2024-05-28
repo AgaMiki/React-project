@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Header = ({ searchQuery, setSearchQuery }) => {
+const Header = ({ searchQuery, setSearchQuery, categories, selectedCategories, setSelectedCategories }) => {
+  const [showFilters, setShowFilters] = useState(false);
+
   const handleClearSearch = () => {
     setSearchQuery('');
+  };
+
+  const handleCategoryChange = (category) => {
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter(c => c !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
+  };
+
+  const handleClearFilters = () => {
+    setSelectedCategories([]);
   };
 
   return (
@@ -24,9 +38,37 @@ const Header = ({ searchQuery, setSearchQuery }) => {
             Clear
           </button>
         )}
+        <button
+          className="ml-4 text-white"
+          onClick={() => setShowFilters(!showFilters)}
+        >
+          Filtruj
+        </button>
+        {showFilters && (
+          <div className="absolute top-12 right-0 bg-white text-black shadow-md rounded-md p-4 z-10">
+            {categories.map(category => (
+              <div key={category} className="flex items-center mb-2">
+                <input
+                  type="checkbox"
+                  checked={selectedCategories.includes(category)}
+                  onChange={() => handleCategoryChange(category)}
+                  className="mr-2"
+                />
+                <label>{category}</label>
+              </div>
+            ))}
+            <button
+              className="mt-2 text-black bg-gray-200 rounded-md px-2 py-1"
+              onClick={handleClearFilters}
+            >
+              Clear Filters
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );
 };
 
 export default Header;
+

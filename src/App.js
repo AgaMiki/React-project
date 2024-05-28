@@ -3,7 +3,6 @@ import AlbumList from './components/AlbumList';
 import './App.css';
 
 function App() {
-
   const [albums, setAlbums] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -12,7 +11,7 @@ function App() {
       .then(response => response.json())
       .then(data => setAlbums(data.feed.entry))
       .catch(error => console.error('Error fetching data:', error));
-  }, []); 
+  }, []);
 
   const filteredAlbums = albums.filter(album => {
     const title = album['im:name'].label.toLowerCase();
@@ -21,11 +20,9 @@ function App() {
     return title.includes(query) || artist.includes(query);
   });
 
-
   return (
     <div className="App">
-      {}
-      <AlbumList albums={filteredAlbums} setSearchQuery={setSearchQuery} />
+      <AlbumList albums={filteredAlbums} searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
     </div>
   );
 }
