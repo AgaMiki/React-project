@@ -11,7 +11,6 @@ const AlbumList = ({ albums }) => {
   const [selectedCategories, setSelectedCategories] = useState([]);
 
   useEffect(() => {
-
     const uniqueCategories = [...new Set(albums.map(album => album.category.attributes.label))];
     setCategories(uniqueCategories);
   }, [albums]);
@@ -87,3 +86,4 @@ const AlbumList = ({ albums }) => {
 };
 
 export default AlbumList;
+
