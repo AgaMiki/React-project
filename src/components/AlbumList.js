@@ -25,6 +25,9 @@ const AlbumList = ({ albums }) => {
     setSelectedAlbumIndex(null);
   };
 
+
+
+  
   const handlePrev = () => {
     setSelectedAlbumIndex((prevIndex) => {
       const newIndex = prevIndex - 1;
