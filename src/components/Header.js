@@ -1,18 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Header = ({ searchQuery, setSearchQuery, categories, selectedCategories, setSelectedCategories }) => {
-  const [showFilters, setShowFilters] = useState(false);
+const Header = ({ searchQuery, setSearchQuery, selectedCategories, setSelectedCategories, albums }) => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const uniqueCategories = [...new Set(albums.map(album => album.category))];
+    setCategories(uniqueCategories);
+  }, [albums]);
 
   const handleClearSearch = () => {
     setSearchQuery('');
   };
 
-  const handleCategoryChange = (category) => {
-    if (selectedCategories.includes(category)) {
-      setSelectedCategories(selectedCategories.filter(c => c !== category));
-    } else {
-      setSelectedCategories([...selectedCategories, category]);
-    }
+  const handleFilterChange = (category) => {
+    setSelectedCategories((prevCategories) =>
+      prevCategories.includes(category)
+        ? prevCategories.filter(cat => cat !== category)
+        : [...prevCategories, category]
+    );
   };
 
   const handleClearFilters = () => {
@@ -20,9 +25,9 @@ const Header = ({ searchQuery, setSearchQuery, categories, selectedCategories, s
   };
 
   return (
-    <header className="bg-black shadow-md p-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold text-white">Top 100 Albums</h1>
-      <div className="relative flex items-center">
+    <header className="bg-black shadow-md p-4 flex flex-col md:flex-row justify-between items-center">
+      <h1 className="text-xl font-bold text-white mb-4 md:mb-0">Top 100 Albums</h1>
+      <div className="relative flex items-center mb-4 md:mb-0">
         <input
           type="text"
           placeholder="Search"
@@ -38,37 +43,28 @@ const Header = ({ searchQuery, setSearchQuery, categories, selectedCategories, s
             Clear
           </button>
         )}
-        <button
-          className="ml-4 text-white"
-          onClick={() => setShowFilters(!showFilters)}
-        >
-          Filtruj
+      </div>
+      <div className="relative flex items-center mb-4 md:mb-0">
+        <button className="text-white" onClick={handleClearFilters}>
+          Clear Filters
         </button>
-        {showFilters && (
-          <div className="absolute top-12 right-0 bg-white text-black shadow-md rounded-md p-4 z-10">
-            {categories.map(category => (
-              <div key={category} className="flex items-center mb-2">
-                <input
-                  type="checkbox"
-                  checked={selectedCategories.includes(category)}
-                  onChange={() => handleCategoryChange(category)}
-                  className="mr-2"
-                />
-                <label>{category}</label>
-              </div>
-            ))}
-            <button
-              className="mt-2 text-black bg-gray-200 rounded-md px-2 py-1"
-              onClick={handleClearFilters}
-            >
-              Clear Filters
-            </button>
-          </div>
-        )}
+      </div>
+      <div className="flex flex-wrap">
+        {categories.map((category) => (
+          <label key={category} className="mr-4">
+            <input
+              type="checkbox"
+              checked={selectedCategories.includes(category)}
+              onChange={() => handleFilterChange(category)}
+            />
+            <span className="ml-2 text-white">{category}</span>
+          </label>
+        ))}
       </div>
     </header>
   );
 };
 
 export default Header;
+
 

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AlbumList from './components/AlbumList';
 import fetchTopAlbums  from './services/albumService';
-
-
 import './App.css';
 
 function App() {
