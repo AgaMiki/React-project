@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import SearchInput from './componentsHeader/FilterButtons';
-import FilterButtons from './componentsHeader/FilterCheckboxes';
-import FilterCheckboxes from './componentsHeader/SearchInput';
+import SearchInput from './componentsHeader/SearchInput';
+import FilterButtons from './componentsHeader/FilterButtons';
+import FilterCheckboxes from './componentsHeader/FilterCheckboxes';
 
 const Header = ({ searchQuery, setSearchQuery, selectedCategories, setSelectedCategories, albums }) => {
   const [categories, setCategories] = useState([]);
@@ -14,7 +14,10 @@ const Header = ({ searchQuery, setSearchQuery, selectedCategories, setSelectedCa
   return (
     <header className="bg-black shadow-md p-4 flex flex-col md:flex-row justify-between items-center">
       <h1 className="text-xl font-bold text-white mb-4 md:mb-0">Top 100 Albums</h1>
-      <SearchInput searchQuery={searchQuery} setSearchQuery={setSearchQuery} handleClearSearch={() => setSearchQuery('')} />
+      <SearchInput
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        handleClearSearch={() => setSearchQuery('')} />
       <FilterButtons handleClearFilters={() => setSelectedCategories([])} />
       <FilterCheckboxes
         categories={categories}
@@ -30,3 +33,4 @@ const Header = ({ searchQuery, setSearchQuery, selectedCategories, setSelectedCa
 };
 
 export default Header;
+

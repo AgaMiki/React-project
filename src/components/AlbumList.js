@@ -18,15 +18,19 @@ const AlbumList = ({ albums, searchQuery, setSearchQuery, selectedCategories, se
   };
 
   const handlePrev = () => {
-    setSelectedAlbumIndex(prevIndex => prevIndex - 1);
-    setSelectedAlbum(albums[selectedAlbumIndex - 1]);
+    setSelectedAlbumIndex(prevIndex => {
+      const newIndex = prevIndex - 1;
+      return newIndex >= 0 ? newIndex : 0;
+    });
   };
-
+  
   const handleNext = () => {
-    setSelectedAlbumIndex(prevIndex => prevIndex + 1);
-    setSelectedAlbum(albums[selectedAlbumIndex + 1]);
+    setSelectedAlbumIndex(prevIndex => {
+      const newIndex = prevIndex + 1;
+      return newIndex < filteredAlbums.length ? newIndex : prevIndex;
+    });
   };
-
+  
   const filteredAlbums = albums.filter(album =>
     (album.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
      album.artist.toLowerCase().includes(searchQuery.toLowerCase())) &&
