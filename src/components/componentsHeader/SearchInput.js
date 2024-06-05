@@ -1,3 +1,4 @@
+// SearchInput.js
 import React from 'react';
 
 const SearchInput = ({ searchQuery, setSearchQuery, handleClearSearch }) => {

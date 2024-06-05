@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import AlbumList from './components/AlbumList';
+import AlbumList from './components/AlbumList/AlbumList';
 import fetchTopAlbums  from './services/albumService';
 import './App.css';
 
