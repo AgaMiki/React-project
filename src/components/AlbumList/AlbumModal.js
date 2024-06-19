@@ -4,6 +4,7 @@ import AlbumNavigationHandler from './AlbumNavigationHandler';
 const AlbumModal = ({ album, onClose, selectedAlbumIndex, setSelectedAlbumIndex, albums }) => {
   if (!album) return null;
 
+  // Poniższe 2 linijki do usunięcia, isFirstAlbum i isLastAlbum nie są użyte w tym komponencie
   const isFirstAlbum = selectedAlbumIndex === 0;
   const isLastAlbum = selectedAlbumIndex === albums.length - 1;
 

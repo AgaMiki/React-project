@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+// [!] Blokuje kompilowanie apki: zły import, powinno być './AlbumCard/AlbumCard'
 import AlbumCard from './AlbumCard';
 import AlbumModal from './AlbumModal';
+// [!] Blokuje kompilowanie apki: zły import, powinno być '../componentsHeader/Header'
 import Header from './Header';
 
 const AlbumList = ({ albums, searchQuery, setSearchQuery, selectedCategories, setSelectedCategories }) => {
@@ -23,14 +25,14 @@ const AlbumList = ({ albums, searchQuery, setSearchQuery, selectedCategories, se
       return newIndex >= 0 ? newIndex : 0;
     });
   };
-  
+
   const handleNext = () => {
     setSelectedAlbumIndex(prevIndex => {
       const newIndex = prevIndex + 1;
       return newIndex < filteredAlbums.length ? newIndex : prevIndex;
     });
   };
-  
+
   const filteredAlbums = albums.filter(album =>
     (album.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
      album.artist.toLowerCase().includes(searchQuery.toLowerCase())) &&
